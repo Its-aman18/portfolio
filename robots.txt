@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://portfolio-ten-sooty-87.vercel.app/sitemap.xml
