@@ -1788,3 +1788,595 @@ img {
         display: none;
     }
 }
+
+
+/* ==========================================================================
+   PORTFOLIO UPGRADE: HERO, PROJECTS, NEWSPAPER GALLERY & CONTACT STYLES
+   ========================================================================== */
+
+/* 1. Hero Profile Enhancements & Status Pill */
+.hero-status-pill {
+    position: absolute;
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #FFFFFF;
+    color: var(--dark-wine);
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 0.4rem 1rem;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--border-wine);
+    box-shadow: 0 4px 16px rgba(123, 23, 52, 0.12);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+    z-index: 5;
+}
+
+.status-indicator-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #10B981;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+    animation: pulse-green 2s infinite;
+}
+
+@keyframes pulse-green {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.25); opacity: 0.8; }
+}
+
+/* 2. Featured Projects Badges & Status */
+.project-badge-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-bottom: 0.8rem;
+    flex-wrap: wrap;
+}
+
+.project-live-indicator {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #047857;
+    background: #ECFDF5;
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--radius-full);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    border: 1px solid #A7F3D0;
+}
+
+.live-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #10B981;
+    animation: pulse-green 2s infinite;
+}
+
+.project-private-indicator {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #B45309;
+    background: #FFFBEB;
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--radius-full);
+    border: 1px solid #FDE68A;
+}
+
+.btn-disabled-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    background: var(--soft-bg);
+    border: 1px dashed var(--border-color);
+    padding: 0.55rem 1.1rem;
+    border-radius: var(--radius-md);
+    cursor: not-allowed;
+    user-select: none;
+}
+
+/* 3. Newspaper Cuttings & Achievements Gallery */
+.newspaper-gallery-container {
+    margin-bottom: 3.5rem;
+}
+
+.gallery-category-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.8rem;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.gallery-tag {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--dark-wine);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.gallery-hint {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.newspaper-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.2rem;
+}
+
+@media (max-width: 900px) {
+    .newspaper-grid {
+        grid-template-columns: 1fr;
+        gap: 1.8rem;
+    }
+}
+
+.newspaper-card {
+    background: #FFFFFF;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-wine);
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+}
+
+.newspaper-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--orange);
+}
+
+.newspaper-media-wrapper {
+    position: relative;
+    width: 100%;
+    background-color: #F6F3EF; /* Neutral off-white frame ensuring newspaper edges and text remain distinct */
+    padding: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.newspaper-img {
+    width: 100%;
+    height: auto;
+    object-fit: contain !important;
+    display: block;
+    border-radius: 4px;
+    box-shadow: 0 4px 14px rgba(28, 25, 23, 0.08);
+    transition: transform var(--transition-normal);
+}
+
+.newspaper-card:hover .newspaper-img {
+    transform: scale(1.02);
+}
+
+.newspaper-overlay-badge {
+    position: absolute;
+    bottom: 1.2rem;
+    right: 1.2rem;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: all var(--transition-fast);
+    pointer-events: none;
+}
+
+.newspaper-card:hover .newspaper-overlay-badge,
+.achievement-card:hover .newspaper-overlay-badge {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.view-indicator {
+    background: rgba(74, 16, 36, 0.92);
+    color: #FFFFFF;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 0.4rem 0.85rem;
+    border-radius: var(--radius-full);
+    backdrop-filter: blur(4px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.newspaper-info {
+    padding: 1.8rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 0.8rem;
+}
+
+.newspaper-meta-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+}
+
+.newspaper-source-badge {
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--wine-red);
+    background: rgba(123, 23, 52, 0.08);
+    padding: 0.2rem 0.65rem;
+    border-radius: 4px;
+}
+
+.newspaper-date-badge {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.newspaper-title {
+    font-size: 1.18rem;
+    font-weight: 800;
+    color: var(--dark-wine);
+    line-height: 1.35;
+}
+
+.newspaper-desc {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    flex: 1;
+}
+
+.newspaper-action-row {
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.btn-read-cutting {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--wine-red);
+    background: transparent;
+    padding: 0.45rem 0.9rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-wine);
+    transition: all var(--transition-fast);
+}
+
+.newspaper-card:hover .btn-read-cutting {
+    background: var(--wine-red);
+    color: #FFFFFF;
+    border-color: var(--wine-red);
+}
+
+.institutional-honors-wrapper {
+    margin-top: 2rem;
+}
+
+/* 4. Full-Screen Interactive Lightbox */
+.media-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    display: flex;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+}
+
+.media-lightbox.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.lightbox-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(18, 7, 13, 0.94);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.lightbox-container {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.lightbox-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.8rem;
+    background: linear-gradient(to bottom, rgba(18, 7, 13, 0.85), transparent);
+    color: #FFFFFF;
+    gap: 1rem;
+}
+
+.lightbox-counter {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--text-on-dark-muted);
+    background: rgba(255, 255, 255, 0.08);
+    padding: 0.3rem 0.8rem;
+    border-radius: var(--radius-full);
+}
+
+.lightbox-zoom-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: rgba(255, 255, 255, 0.08);
+    padding: 0.25rem 0.6rem;
+    border-radius: var(--radius-full);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.lightbox-zoom-level {
+    font-size: 0.78rem;
+    font-weight: 700;
+    min-width: 48px;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.lightbox-btn {
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: #FFFFFF;
+    background: transparent;
+    transition: all var(--transition-fast);
+}
+
+.lightbox-btn:hover {
+    background: rgba(255, 255, 255, 0.18);
+    transform: scale(1.08);
+}
+
+.lightbox-close {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.lightbox-close:hover {
+    background: var(--orange);
+    color: #FFFFFF;
+}
+
+.lightbox-stage {
+    position: relative;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 0 1rem;
+}
+
+.lightbox-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 30;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    backdrop-filter: blur(4px);
+}
+
+.lightbox-nav-btn:hover {
+    background: var(--orange);
+    border-color: var(--orange);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.lightbox-nav-btn.prev-btn {
+    left: 1.5rem;
+}
+
+.lightbox-nav-btn.next-btn {
+    right: 1.5rem;
+}
+
+.lightbox-image-viewport {
+    position: relative;
+    max-width: 90vw;
+    max-height: calc(85vh - 120px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+}
+
+.lightbox-image-canvas {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform-origin: center center;
+    transition: transform 0.15s ease-out;
+    cursor: zoom-in;
+    user-select: none;
+}
+
+.lightbox-image-canvas.zoomed {
+    cursor: grab;
+}
+
+.lightbox-image-canvas.dragging {
+    cursor: grabbing;
+    transition: none;
+}
+
+#lightboxImg {
+    max-width: 90vw;
+    max-height: calc(85vh - 120px);
+    width: auto;
+    height: auto;
+    object-fit: contain !important;
+    display: block;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7);
+    border-radius: 4px;
+    background-color: #FAF8F6;
+}
+
+.lightbox-caption-bar {
+    padding: 1rem 2rem 1.2rem;
+    background: linear-gradient(to top, rgba(18, 7, 13, 0.9), transparent);
+    color: #FFFFFF;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.lightbox-caption-tag {
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--orange);
+    margin-bottom: 0.3rem;
+}
+
+.lightbox-caption-title {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #FFFFFF;
+    margin-bottom: 0.4rem;
+}
+
+.lightbox-caption-desc {
+    font-size: 0.88rem;
+    color: var(--text-on-dark-muted);
+    line-height: 1.5;
+}
+
+.lightbox-caption-hint {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.4);
+    margin-top: 0.5rem;
+}
+
+/* 5. Contact Form Enhancements & Loading States */
+.required-star {
+    color: #E11D48;
+}
+
+.field-error-msg {
+    font-size: 0.78rem;
+    color: #DC2626;
+    font-weight: 600;
+    display: none;
+    margin-top: 0.2rem;
+}
+
+.field-error-msg.visible {
+    display: block;
+}
+
+.form-group.has-error input,
+.form-group.has-error textarea {
+    border-color: #DC2626;
+    background: #FEF2F2;
+}
+
+.btn-spinner {
+    display: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: #FFFFFF;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+.btn-primary.loading .btn-spinner {
+    display: inline-block;
+}
+
+.btn-primary.loading .btn-text {
+    opacity: 0.8;
+}
+
+.btn-primary.loading {
+    cursor: wait;
+    pointer-events: none;
+    opacity: 0.85;
+}
+
+.contact-detail-item {
+    transition: transform var(--transition-fast), background var(--transition-fast);
+}
+
+a.contact-detail-item:hover {
+    transform: translateX(4px);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.contact-footer-note {
+    margin-top: 2rem;
+    font-size: 0.85rem;
+    color: #E295A8;
+}
+
+@media (max-width: 768px) {
+    .lightbox-toolbar {
+        padding: 0.8rem 1rem;
+    }
+    .lightbox-nav-btn {
+        width: 40px;
+        height: 40px;
+    }
+    .lightbox-nav-btn.prev-btn {
+        left: 0.5rem;
+    }
+    .lightbox-nav-btn.next-btn {
+        right: 0.5rem;
+    }
+    .lightbox-caption-title {
+        font-size: 1rem;
+    }
+    .lightbox-caption-desc {
+        font-size: 0.8rem;
+    }
+}

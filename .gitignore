@@ -1,0 +1,15 @@
+# Environment variables
+.env
+.env.local
+.env.*.local
+*.env
+
+# Dependencies
+node_modules/
+package-lock.json
+
+# Build and Vercel artifacts
+.vercel/
+dist/
+build/
+.DS_Store

@@ -1,0 +1,21 @@
+{
+  "name": "aman-gupt-portfolio",
+  "version": "1.1.0",
+  "description": "Aman Gupt - B.Tech CSE Student & Web Developer Portfolio",
+  "main": "api/contact.js",
+  "scripts": {
+    "test": "node -e \"console.log('Portfolio test suite ready')\""
+  },
+  "dependencies": {
+    "nodemailer": "^6.9.16"
+  },
+  "keywords": [
+    "portfolio",
+    "developer",
+    "aman-gupt",
+    "scriet",
+    "cosmeera"
+  ],
+  "author": "Aman Gupt",
+  "license": "MIT"
+}
