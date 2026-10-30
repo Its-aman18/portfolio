@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initProjectFilters();
     initAchievementsGallery();
     initLightbox();
+    initImageLoadStates();
     initContactForm();
     initResumeDownload();
     initGitHubActivity();
@@ -136,7 +137,7 @@ function initProjectFilters() {
 /* --------------------------------------------------------------------------
    5. ACHIEVEMENTS & NEWSPAPER CUTTING LIGHTBOX CONTROLLER
    -------------------------------------------------------------------------- */
-const GALLERY_ITEMS = [
+const NEWSPAPER_GALLERY = [
     {
         src: "https://i.pinimg.com/736x/f6/c7/6b/f6c76bab8160cadaf8a6ffe9ce821ac1.jpg",
         tag: "Hindustan National Daily · Press Feature",
@@ -160,7 +161,10 @@ const GALLERY_ITEMS = [
         tag: "Director's Recognition · Oct 26, 2026",
         title: "Certificate of Appreciation — Founding Cosmeera",
         desc: "Proudly awarded to Aman Gupt by Director SCRIET Prof. (Dr.) Niraj Singhal for founding Cosmeera, empowering small local shops in Gorakhpur and Maharajganj, and single-handedly designing, developing and launching the platform."
-    },
+    }
+];
+
+const HONORS_GALLERY = [
     {
         src: "assets/memento.jpg",
         tag: "Institutional Honor · SCRIET & Unnat Bharat Abhiyan",
@@ -175,6 +179,7 @@ const GALLERY_ITEMS = [
     }
 ];
 
+let activeGallery = NEWSPAPER_GALLERY;
 let currentLightboxIdx = 0;
 let currentZoom = 1.0;
 let isDragging = false;
@@ -184,15 +189,66 @@ let translateX = 0;
 let translateY = 0;
 
 function initAchievementsGallery() {
-    const triggerCards = document.querySelectorAll('[data-gallery-index]');
-
-    triggerCards.forEach(card => {
-        card.addEventListener('click', (e) => {
+    // 1. Newspaper cuttings gallery cards (Items 0 to 3)
+    const newspaperCards = document.querySelectorAll('.newspaper-grid [data-gallery-index]');
+    newspaperCards.forEach(card => {
+        card.addEventListener('click', () => {
             const idx = parseInt(card.getAttribute('data-gallery-index'), 10);
-            if (!isNaN(idx) && idx >= 0 && idx < GALLERY_ITEMS.length) {
+            if (!isNaN(idx) && idx >= 0 && idx < NEWSPAPER_GALLERY.length) {
+                activeGallery = NEWSPAPER_GALLERY;
                 openLightbox(idx);
             }
         });
+    });
+
+    // 2. Preserved Institutional Honors cards (Items 4 and 5 in HTML, mapped to 0 and 1 in HONORS_GALLERY)
+    const honorCards = document.querySelectorAll('.achievements-grid [data-gallery-index]');
+    honorCards.forEach((card, i) => {
+        card.addEventListener('click', () => {
+            if (i >= 0 && i < HONORS_GALLERY.length) {
+                activeGallery = HONORS_GALLERY;
+                openLightbox(i);
+            }
+        });
+    });
+}
+
+function initImageLoadStates() {
+    const wrappers = document.querySelectorAll('.newspaper-media-wrapper');
+    wrappers.forEach(wrapper => {
+        const img = wrapper.querySelector('.newspaper-img');
+        if (!img) return;
+
+        function markLoaded() {
+            wrapper.classList.add('loaded');
+        }
+
+        function markError() {
+            wrapper.classList.remove('loaded');
+            if (!wrapper.querySelector('.media-error-badge')) {
+                const errBox = document.createElement('div');
+                errBox.className = 'media-error-badge';
+                errBox.innerHTML = `
+                    <span>⚠️ Unable to load cutting</span>
+                    <button type="button" class="btn-retry-image">Retry</button>
+                `;
+                const retryBtn = errBox.querySelector('.btn-retry-image');
+                retryBtn?.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    errBox.remove();
+                    const clean = img.src.split('?')[0];
+                    img.src = `${clean}?t=${Date.now()}`;
+                });
+                wrapper.appendChild(errBox);
+            }
+        }
+
+        if (img.complete && img.naturalWidth > 0) {
+            markLoaded();
+        } else {
+            img.addEventListener('load', markLoaded);
+            img.addEventListener('error', markError);
+        }
     });
 }
 
@@ -374,13 +430,13 @@ function closeLightbox() {
 }
 
 function navigateLightbox(step) {
-    currentLightboxIdx = (currentLightboxIdx + step + GALLERY_ITEMS.length) % GALLERY_ITEMS.length;
+    currentLightboxIdx = (currentLightboxIdx + step + activeGallery.length) % activeGallery.length;
     resetZoom();
     updateLightboxContent();
 }
 
 function updateLightboxContent() {
-    const item = GALLERY_ITEMS[currentLightboxIdx];
+    const item = activeGallery[currentLightboxIdx];
     if (!item) return;
 
     const img = document.getElementById('lightboxImg');
@@ -398,7 +454,7 @@ function updateLightboxContent() {
     if (title) title.textContent = item.title;
     if (desc) desc.textContent = item.desc;
     if (currentIdxEl) currentIdxEl.textContent = currentLightboxIdx + 1;
-    if (totalCountEl) totalCountEl.textContent = GALLERY_ITEMS.length;
+    if (totalCountEl) totalCountEl.textContent = activeGallery.length;
 }
 
 function setZoom(scale) {
